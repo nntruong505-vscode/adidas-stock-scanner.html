@@ -1,194 +1,727 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="vi">
 
 <head>
 
-<meta
-  charset="UTF-8"
->
+  <meta charset="UTF-8">
 
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1"
->
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  >
 
-<title>ADIDAS BARCODE SCANNER</title>
+  <meta
+    name="apple-mobile-web-app-capable"
+    content="yes"
+  >
 
-<script
-  src="https://unpkg.com/html5-qrcode"
-  type="text/javascript">
-</script>
+  <meta
+    name="mobile-web-app-capable"
+    content="yes"
+  >
 
-<style>
+  <title>ADIDAS SCANNER</title>
 
-* {
-  box-sizing: border-box;
-}
+  <!-- Barcode scanner library -->
+  <script
+    src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"
+  ></script>
 
-body {
 
-  margin: 0;
+  <style>
 
-  background: #000;
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-  color: #fff;
 
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
+    html,
+    body {
 
-}
+      margin: 0;
+      padding: 0;
 
-.header {
+      width: 100%;
+      min-height: 100%;
 
-  height: 56px;
+      background: #000;
+      color: #fff;
 
-  display: flex;
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
 
-  align-items: center;
+    }
 
-  justify-content: space-between;
 
-  padding: 0 16px;
+    body {
 
-  background: #000;
+      min-height: 100vh;
 
-  border-bottom:
-    1px solid #333;
+      padding-bottom:
+        env(safe-area-inset-bottom);
 
-}
+    }
 
-.logo {
 
-  font-weight: 900;
+    /* =========================
+       HEADER
+    ========================= */
 
-  font-size: 16px;
+    .header {
 
-}
+      height: 62px;
 
-.logo span {
+      display: flex;
 
-  color: #76ff00;
+      align-items: center;
 
-}
+      justify-content: space-between;
 
-.close {
+      padding:
 
-  color: #fff;
+        0
+        16px;
 
-  text-decoration: none;
+      background: #000;
 
-  font-size: 25px;
+      border-bottom:
+        1px solid #292929;
 
-}
+      position: sticky;
 
-.container {
+      top: 0;
 
-  max-width: 500px;
+      z-index: 100;
 
-  margin: auto;
+    }
 
-  padding: 15px;
 
-}
+    .logo {
 
-.title {
+      font-size: 18px;
 
-  text-align: center;
+      font-weight: 900;
 
-  font-size: 13px;
+      letter-spacing: .3px;
 
-  font-weight: 900;
+    }
 
-  margin: 10px 0 15px;
 
-}
+    .logo span {
 
-#reader {
+      color: #76ff00;
 
-  width: 100%;
+    }
 
-  background: #111;
 
-  border-radius: 10px;
+    .close {
 
-  overflow: hidden;
+      width: 40px;
+      height: 40px;
 
-}
+      display: flex;
 
-.status {
+      align-items: center;
+      justify-content: center;
 
-  margin-top: 15px;
+      color: #fff;
 
-  background: #111;
+      text-decoration: none;
 
-  border-radius: 8px;
+      font-size: 30px;
 
-  padding: 14px;
+      border-radius: 50%;
 
-  text-align: center;
+    }
 
-  font-size: 11px;
 
-}
+    .close:active {
 
-.manual {
+      background: #222;
 
-  margin-top: 12px;
+    }
 
-  display: flex;
 
-  gap: 6px;
+    /* =========================
+       MAIN
+    ========================= */
 
-}
+    .container {
 
-.manual input {
+      width: 100%;
 
-  flex: 1;
+      max-width: 560px;
 
-  height: 42px;
+      margin: auto;
 
-  border: 0;
+      padding:
 
-  border-radius: 5px;
+        16px
+        14px
+        30px;
 
-  padding: 0 10px;
+    }
 
-  font-size: 14px;
 
-}
+    .title {
 
-.manual button {
+      text-align: center;
 
-  width: 80px;
+      font-size: 17px;
 
-  background: #fff;
+      font-weight: 900;
 
-  border: 0;
+      margin:
 
-  border-radius: 5px;
+        8px
+        0
+        15px;
 
-  font-weight: 900;
+    }
 
-}
 
-.help {
+    /* =========================
+       CAMERA
+    ========================= */
 
-  text-align: center;
+    #reader {
 
-  color: #999;
+      width: 100%;
 
-  font-size: 9px;
+      min-height: 260px;
 
-  line-height: 1.5;
+      background: #111;
 
-  margin-top: 14px;
+      border:
 
-}
+        1px
+        solid
+        #282828;
 
-</style>
+      border-radius: 14px;
+
+      overflow: hidden;
+
+      position: relative;
+
+    }
+
+
+    #reader video {
+
+      width: 100% !important;
+
+      height: auto !important;
+
+      object-fit: cover !important;
+
+      border-radius: 12px;
+
+    }
+
+
+    #reader__scan_region {
+
+      width: 100% !important;
+
+    }
+
+
+    #reader__scan_region img {
+
+      display: none !important;
+
+    }
+
+
+    #reader__dashboard {
+
+      display: none !important;
+
+    }
+
+
+    /* =========================
+       SCAN FRAME
+    ========================= */
+
+    .scan-frame {
+
+      position: absolute;
+
+      left: 50%;
+
+      top: 50%;
+
+      transform:
+
+        translate(
+          -50%,
+          -50%
+        );
+
+      width: 82%;
+
+      height: 120px;
+
+      border:
+
+        2px
+        solid
+        #76ff00;
+
+      border-radius: 10px;
+
+      pointer-events: none;
+
+      z-index: 10;
+
+      box-shadow:
+
+        0 0 0 9999px
+        rgba(0,0,0,.25);
+
+    }
+
+
+    .scan-line {
+
+      position: absolute;
+
+      left: 4%;
+
+      right: 4%;
+
+      top: 50%;
+
+      height: 2px;
+
+      background: #76ff00;
+
+      box-shadow:
+
+        0 0 8px
+        #76ff00;
+
+      animation:
+
+        scanLine
+        2s
+        linear
+        infinite;
+
+    }
+
+
+    @keyframes scanLine {
+
+      0% {
+
+        top: 10%;
+
+      }
+
+      50% {
+
+        top: 90%;
+
+      }
+
+      100% {
+
+        top: 10%;
+
+      }
+
+    }
+
+
+    /* =========================
+       STATUS
+    ========================= */
+
+    .status {
+
+      margin-top: 14px;
+
+      padding: 14px;
+
+      background: #111;
+
+      border:
+
+        1px
+        solid
+        #292929;
+
+      border-radius: 10px;
+
+      text-align: center;
+
+      font-size: 13px;
+
+      line-height: 1.5;
+
+    }
+
+
+    .status.ok {
+
+      border-color: #76ff00;
+
+      color: #76ff00;
+
+    }
+
+
+    .status.error {
+
+      border-color: #ff3b30;
+
+      color: #ff6b63;
+
+    }
+
+
+    .status.warning {
+
+      border-color: #ffcc00;
+
+      color: #ffd84d;
+
+    }
+
+
+    /* =========================
+       BUTTONS
+    ========================= */
+
+    .buttons {
+
+      display: grid;
+
+      grid-template-columns:
+
+        1fr
+        1fr;
+
+      gap: 8px;
+
+      margin-top: 12px;
+
+    }
+
+
+    button {
+
+      min-height: 46px;
+
+      border: 0;
+
+      border-radius: 9px;
+
+      font-size: 14px;
+
+      font-weight: 900;
+
+      cursor: pointer;
+
+    }
+
+
+    .btn-green {
+
+      background: #76ff00;
+
+      color: #000;
+
+    }
+
+
+    .btn-white {
+
+      background: #fff;
+
+      color: #000;
+
+    }
+
+
+    .btn-dark {
+
+      background: #222;
+
+      color: #fff;
+
+      border:
+
+        1px
+        solid
+        #444;
+
+    }
+
+
+    button:active {
+
+      transform: scale(.98);
+
+    }
+
+
+    button:disabled {
+
+      opacity: .45;
+
+    }
+
+
+    /* =========================
+       MANUAL INPUT
+    ========================= */
+
+    .manual-title {
+
+      margin-top: 20px;
+
+      margin-bottom: 8px;
+
+      font-size: 12px;
+
+      color: #aaa;
+
+      font-weight: bold;
+
+    }
+
+
+    .manual {
+
+      display: flex;
+
+      gap: 7px;
+
+    }
+
+
+    .manual input {
+
+      flex: 1;
+
+      min-width: 0;
+
+      height: 46px;
+
+      border: 0;
+
+      border-radius: 9px;
+
+      padding:
+
+        0
+        13px;
+
+      font-size: 16px;
+
+      outline: none;
+
+    }
+
+
+    .manual button {
+
+      width: 75px;
+
+    }
+
+
+    /* =========================
+       RESULT
+    ========================= */
+
+    .result {
+
+      display: none;
+
+      margin-top: 15px;
+
+      padding: 16px;
+
+      background: #111;
+
+      border:
+
+        1px
+        solid
+        #76ff00;
+
+      border-radius: 12px;
+
+      text-align: center;
+
+    }
+
+
+    .result-title {
+
+      color: #76ff00;
+
+      font-size: 12px;
+
+      font-weight: 900;
+
+      margin-bottom: 8px;
+
+    }
+
+
+    .result-code {
+
+      font-size: 25px;
+
+      font-weight: 900;
+
+      letter-spacing: 1px;
+
+      word-break: break-all;
+
+    }
+
+
+    /* =========================
+       HELP
+    ========================= */
+
+    .help {
+
+      margin-top: 18px;
+
+      color: #888;
+
+      text-align: center;
+
+      font-size: 11px;
+
+      line-height: 1.6;
+
+    }
+
+
+    .help strong {
+
+      color: #bbb;
+
+    }
+
+
+    /* =========================
+       BROWSER WARNING
+    ========================= */
+
+    .browser-warning {
+
+      display: none;
+
+      margin-top: 14px;
+
+      padding: 14px;
+
+      background: #191000;
+
+      border:
+
+        1px
+        solid
+        #ffb000;
+
+      border-radius: 10px;
+
+      color: #ffd166;
+
+      font-size: 12px;
+
+      line-height: 1.5;
+
+    }
+
+
+    /* =========================
+       LOADING
+    ========================= */
+
+    .loading {
+
+      display: none;
+
+      position: fixed;
+
+      inset: 0;
+
+      background:
+        rgba(0,0,0,.82);
+
+      z-index: 999;
+
+      align-items: center;
+
+      justify-content: center;
+
+      flex-direction: column;
+
+      gap: 12px;
+
+    }
+
+
+    .loading.show {
+
+      display: flex;
+
+    }
+
+
+    .spinner {
+
+      width: 42px;
+
+      height: 42px;
+
+      border:
+
+        4px
+        solid
+        #333;
+
+      border-top-color:
+        #76ff00;
+
+      border-radius: 50%;
+
+      animation:
+
+        spin
+        .8s
+        linear
+        infinite;
+
+    }
+
+
+    @keyframes spin {
+
+      to {
+
+        transform: rotate(360deg);
+
+      }
+
+    }
+
+
+  </style>
 
 </head>
 
@@ -196,85 +729,246 @@ body {
 <body>
 
 
-<div class="header">
+  <!-- =========================
+       HEADER
+  ========================= -->
 
-  <div class="logo">
+  <div class="header">
 
-    ADIDAS <span>SCANNER</span>
+    <div class="logo">
 
-  </div>
+      ADIDAS
+      <span>SCANNER</span>
 
-  <a
-    href="javascript:window.close()"
-    class="close">
-
-    ×
-
-  </a>
-
-</div>
+    </div>
 
 
-<div class="container">
-
-
-  <div class="title">
-
-    QUÉT BARCODE SẢN PHẨM
-
-  </div>
-
-
-  <div id="reader"></div>
-
-
-  <div
-    id="status"
-    class="status">
-
-    Đang khởi động camera...
-
-  </div>
-
-
-  <div class="manual">
-
-    <input
-      id="manual"
-      placeholder="Nhập EAN thủ công"
+    <a
+      href="javascript:closeScanner()"
+      class="close"
+      aria-label="Đóng"
     >
 
-    <button
-      onclick="manualSearch()">
+      ×
 
-      OK
-
-    </button>
+    </a>
 
   </div>
 
 
-  <div class="help">
+  <!-- =========================
+       MAIN
+  ========================= -->
 
-    Cho phép trình duyệt sử dụng camera.<br>
+  <main class="container">
 
-    Đưa barcode vào giữa khung hình.<br>
 
-    Khi nhận diện thành công,
-    hệ thống sẽ tự động quay lại trang STOCK.
+    <div class="title">
+
+      QUÉT BARCODE SẢN PHẨM
+
+    </div>
+
+
+    <!-- CAMERA -->
+
+    <div id="reader">
+
+      <div class="scan-frame">
+
+        <div class="scan-line"></div>
+
+      </div>
+
+    </div>
+
+
+    <!-- STATUS -->
+
+    <div
+      id="status"
+      class="status"
+    >
+
+      Đang chuẩn bị camera...
+
+    </div>
+
+
+    <!-- BUTTONS -->
+
+    <div class="buttons">
+
+      <button
+        id="startBtn"
+        class="btn-green"
+        onclick="startCamera()"
+      >
+
+        📷 MỞ CAMERA
+
+      </button>
+
+
+      <button
+        id="switchBtn"
+        class="btn-dark"
+        onclick="switchCamera()"
+        disabled
+      >
+
+        🔄 ĐỔI CAMERA
+
+      </button>
+
+    </div>
+
+
+    <!-- MANUAL -->
+
+    <div class="manual-title">
+
+      HOẶC NHẬP EAN THỦ CÔNG
+
+    </div>
+
+
+    <div class="manual">
+
+      <input
+        id="manual"
+        type="text"
+        inputmode="numeric"
+        autocomplete="off"
+        placeholder="Ví dụ: 4062051234567"
+      >
+
+
+      <button
+        class="btn-white"
+        onclick="manualSearch()"
+      >
+
+        OK
+
+      </button>
+
+    </div>
+
+
+    <!-- RESULT -->
+
+    <div
+      id="result"
+      class="result"
+    >
+
+      <div class="result-title">
+
+        BARCODE ĐÃ NHẬN
+
+      </div>
+
+
+      <div
+        id="resultCode"
+        class="result-code"
+      ></div>
+
+
+      <div
+        id="resultAction"
+        style="
+          margin-top:10px;
+          color:#aaa;
+          font-size:11px;
+        "
+      ></div>
+
+    </div>
+
+
+    <!-- BROWSER WARNING -->
+
+    <div
+      id="browserWarning"
+      class="browser-warning"
+    >
+
+      ⚠️ <strong>Trình duyệt hiện tại có thể hạn chế camera.</strong>
+
+      <br><br>
+
+      Nếu camera không mở được, hãy chọn
+
+      <strong>Chia sẻ → Mở trong Safari</strong>
+
+      hoặc mở trực tiếp URL này bằng Safari/Chrome.
+
+    </div>
+
+
+    <!-- HELP -->
+
+    <div class="help">
+
+      <strong>Cách quét:</strong>
+
+      <br>
+
+      1. Bấm MỞ CAMERA.
+
+      <br>
+
+      2. Cho phép trình duyệt sử dụng camera.
+
+      <br>
+
+      3. Đưa barcode vào khung xanh.
+
+      <br>
+
+      4. Giữ điện thoại ổn định khoảng 10–20 cm.
+
+      <br><br>
+
+      Khi quét thành công, hệ thống sẽ tự động xử lý mã.
+
+    </div>
+
+
+  </main>
+
+
+  <!-- LOADING -->
+
+  <div
+    id="loading"
+    class="loading"
+  >
+
+    <div class="spinner"></div>
+
+    <div>
+
+      Đang xử lý...
+
+    </div>
 
   </div>
-
-
-</div>
 
 
 <script>
 
+/* =========================================================
+   ADIDAS STOCK SCANNER
+   VERSION 4.2
+========================================================= */
 
-/************************************************
- * READ RETURN URL
- ************************************************/
+
+/* =========================================================
+   RETURN URL
+========================================================= */
 
 const params =
   new URLSearchParams(
@@ -282,191 +976,1044 @@ const params =
   );
 
 
-const returnUrl =
+/*
+  Nếu được Apps Script gọi:
+
+  Scanner.html?return=https://script.google.com/...
+
+  returnUrl sẽ có giá trị.
+
+  Nếu mở trực tiếp:
+
+  Scanner.html
+
+  returnUrl sẽ rỗng.
+
+  Scanner vẫn hoạt động bình thường.
+*/
+
+let returnUrl =
   params.get('return');
 
 
+if (returnUrl) {
+
+  try {
+
+    returnUrl =
+      decodeURIComponent(returnUrl);
+
+  }
+
+  catch (e) {
+
+    console.warn(
+      'Không decode được return URL',
+      e
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
 let scanner = null;
+
+let cameras = [];
+
+let currentCameraIndex = 0;
+
+let currentCameraId = null;
+
+let scanning = false;
 
 let finished = false;
 
 
-/************************************************
- * START
- ************************************************/
+/* =========================================================
+   DOM
+========================================================= */
+
+const reader =
+  document.getElementById(
+    'reader'
+  );
+
+const statusBox =
+  document.getElementById(
+    'status'
+  );
+
+const startBtn =
+  document.getElementById(
+    'startBtn'
+  );
+
+const switchBtn =
+  document.getElementById(
+    'switchBtn'
+  );
+
+const manualInput =
+  document.getElementById(
+    'manual'
+  );
+
+const resultBox =
+  document.getElementById(
+    'result'
+  );
+
+const resultCode =
+  document.getElementById(
+    'resultCode'
+  );
+
+const resultAction =
+  document.getElementById(
+    'resultAction'
+  );
+
+const warning =
+  document.getElementById(
+    'browserWarning'
+  );
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
 
 window.addEventListener(
   'load',
-  startScanner
+  function() {
+
+    detectBrowser();
+
+    setTimeout(
+      function() {
+
+        /*
+          Không tự mở camera ngay.
+
+          Trên iPhone/Safari/Zalo,
+          user gesture giúp việc cấp quyền
+          camera ổn định hơn.
+
+          Người dùng bấm MỞ CAMERA.
+        */
+
+        setStatus(
+          '📷 Bấm MỞ CAMERA để bắt đầu.',
+          'warning'
+        );
+
+      },
+      300
+    );
+
+  }
 );
 
 
-/************************************************
- * START CAMERA
- ************************************************/
+/* =========================================================
+   BROWSER DETECTION
+========================================================= */
 
-function startScanner() {
+function detectBrowser() {
 
-  if (!returnUrl) {
+  const ua =
+    navigator.userAgent ||
+    '';
 
-    setStatus(
-      'Thiếu URL quay lại Apps Script.'
-    );
 
-    return;
+  const isZalo =
+    /Zalo/i.test(ua);
 
-  }
+
+  const isInstagram =
+    /Instagram/i.test(ua);
+
+
+  const isFacebook =
+    /FBAN|FBAV/i.test(ua);
+
+
+  const isMessenger =
+    /Messenger/i.test(ua);
 
 
   if (
-    !navigator.mediaDevices ||
-    !navigator.mediaDevices.getUserMedia
+    isZalo ||
+    isInstagram ||
+    isFacebook ||
+    isMessenger
   ) {
 
-    setStatus(
-      'Trình duyệt không hỗ trợ camera.'
-    );
+    warning.style.display =
+      'block';
 
-    return;
+    setStatus(
+      '⚠️ Bạn đang sử dụng trình duyệt trong ứng dụng. Nếu camera không mở, hãy mở trang bằng Safari hoặc Chrome.',
+      'warning'
+    );
 
   }
-
-
-  scanner =
-    new Html5Qrcode(
-      'reader'
-    );
-
-
-  scanner
-    .start(
-
-      {
-        facingMode:
-          {
-            ideal:
-              'environment'
-          }
-      },
-
-      {
-
-        fps: 10,
-
-        qrbox: {
-          width: 280,
-          height: 140
-        },
-
-        aspectRatio: 1.777
-
-      },
-
-      function(decodedText) {
-
-        if (finished) return;
-
-        finished = true;
-
-        setStatus(
-          'Đã nhận diện: ' +
-          decodedText
-        );
-
-
-        stopScanner()
-          .then(
-            function() {
-
-              sendResult(
-                decodedText
-              );
-
-            }
-          );
-
-      },
-
-      function(error) {
-
-        // Không hiển thị lỗi từng frame.
-
-      }
-
-    )
-
-    .then(
-      function() {
-
-        setStatus(
-          '📷 Camera đã sẵn sàng — đưa barcode vào khung.'
-        );
-
-      }
-    )
-
-    .catch(
-      function(error) {
-
-        console.error(
-          error
-        );
-
-
-        setStatus(
-
-          '❌ Không thể mở camera. ' +
-          'Hãy kiểm tra quyền Camera của trình duyệt.'
-
-        );
-
-      }
-    );
 
 }
 
 
-/************************************************
- * STOP
- ************************************************/
+/* =========================================================
+   START CAMERA
+========================================================= */
 
-function stopScanner() {
+async function startCamera() {
+
+  if (scanning) {
+
+    return;
+
+  }
+
+
+  finished = false;
+
+
+  setStatus(
+    '⏳ Đang kiểm tra camera...'
+  );
+
+
+  startBtn.disabled =
+    true;
+
+
+  try {
+
+    /*
+      Kiểm tra HTTPS.
+    */
+
+    if (
+      location.protocol !==
+      'https:' &&
+      location.hostname !==
+      'localhost'
+    ) {
+
+      throw new Error(
+        'Camera yêu cầu HTTPS.'
+      );
+
+    }
+
+
+    /*
+      Kiểm tra API camera.
+    */
+
+    if (
+      !navigator.mediaDevices ||
+      !navigator.mediaDevices.getUserMedia
+    ) {
+
+      throw new Error(
+        'Trình duyệt không hỗ trợ getUserMedia.'
+      );
+
+    }
+
+
+    /*
+      Xin quyền camera trước.
+
+      Đây là bước quan trọng
+      với iPhone/Safari.
+    */
+
+    const stream =
+      await navigator.mediaDevices
+        .getUserMedia({
+
+          video: {
+
+            facingMode: {
+
+              ideal:
+                'environment'
+
+            }
+
+          },
+
+          audio: false
+
+        });
+
+
+    /*
+      Tắt stream thử.
+      html5-qrcode sẽ mở camera lại.
+    */
+
+    stream
+      .getTracks()
+      .forEach(
+        function(track) {
+
+          track.stop();
+
+        }
+      );
+
+
+    /*
+      Lấy danh sách camera.
+    */
+
+    cameras =
+      await Html5Qrcode
+        .getCameras();
+
+
+    if (
+      !cameras ||
+      cameras.length === 0
+    ) {
+
+      throw new Error(
+        'Không tìm thấy camera.'
+      );
+
+    }
+
+
+    /*
+      Chọn camera sau.
+
+      iPhone thường trả tên:
+      Back Camera
+      hoặc
+      Camera sau
+    */
+
+    currentCameraIndex =
+      findBackCameraIndex(
+        cameras
+      );
+
+
+    currentCameraId =
+      cameras[
+        currentCameraIndex
+      ].id;
+
+
+    switchBtn.disabled =
+      cameras.length <= 1;
+
+
+    /*
+      Tạo scanner.
+    */
+
+    if (!scanner) {
+
+      scanner =
+        new Html5Qrcode(
+          'reader'
+        );
+
+    }
+
+
+    /*
+      Bắt đầu camera.
+    */
+
+    await scanner.start(
+
+      currentCameraId,
+
+      {
+
+        fps: 12,
+
+        qrbox: {
+
+          width: 300,
+
+          height: 140
+
+        },
+
+        aspectRatio:
+          2.0,
+
+        disableFlip:
+          false
+
+      },
+
+      onScanSuccess,
+
+      onScanError
+
+    );
+
+
+    scanning =
+      true;
+
+
+    startBtn.innerText =
+      '⏹ DỪNG CAMERA';
+
+
+    startBtn.onclick =
+      stopCamera;
+
+
+    setStatus(
+      '📷 Camera đã sẵn sàng — đưa barcode vào khung.',
+      'ok'
+    );
+
+
+  }
+
+  catch (error) {
+
+    console.error(
+      'Camera error:',
+      error
+    );
+
+
+    startBtn.disabled =
+      false;
+
+
+    startBtn.innerText =
+      '📷 MỞ CAMERA';
+
+
+    startBtn.onclick =
+      startCamera;
+
+
+    showCameraError(
+      error
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   FIND BACK CAMERA
+========================================================= */
+
+function findBackCameraIndex(
+  list
+) {
+
+  const keywords = [
+
+    'back',
+
+    'rear',
+
+    'environment',
+
+    'sau',
+
+    'iSight'
+
+  ];
+
+
+  for (
+    let i = 0;
+    i < list.length;
+    i++
+  ) {
+
+    const label =
+      (
+        list[i].label ||
+        ''
+      ).toLowerCase();
+
+
+    for (
+      const keyword
+      of keywords
+    ) {
+
+      if (
+        label.includes(
+          keyword.toLowerCase()
+        )
+      ) {
+
+        return i;
+
+      }
+
+    }
+
+  }
+
+
+  /*
+    Nếu không xác định được,
+    lấy camera cuối cùng.
+
+    Trên nhiều iPhone,
+    camera sau thường là camera
+    được liệt kê sau.
+  */
+
+  return list.length > 1
+    ? list.length - 1
+    : 0;
+
+}
+
+
+/* =========================================================
+   SWITCH CAMERA
+========================================================= */
+
+async function switchCamera() {
+
+  if (
+    !cameras.length ||
+    !scanner
+  ) {
+
+    return;
+
+  }
+
+
+  try {
+
+    setStatus(
+      '🔄 Đang đổi camera...'
+    );
+
+
+    await stopScannerOnly();
+
+
+    currentCameraIndex++;
+
+    if (
+      currentCameraIndex >=
+      cameras.length
+    ) {
+
+      currentCameraIndex = 0;
+
+    }
+
+
+    currentCameraId =
+      cameras[
+        currentCameraIndex
+      ].id;
+
+
+    await scanner.start(
+
+      currentCameraId,
+
+      {
+
+        fps: 12,
+
+        qrbox: {
+
+          width: 300,
+
+          height: 140
+
+        },
+
+        aspectRatio:
+          2.0,
+
+        disableFlip:
+          false
+
+      },
+
+      onScanSuccess,
+
+      onScanError
+
+    );
+
+
+    scanning =
+      true;
+
+
+    setStatus(
+      '📷 Đã đổi camera — đưa barcode vào khung.',
+      'ok'
+    );
+
+  }
+
+  catch (error) {
+
+    console.error(
+      error
+    );
+
+    setStatus(
+      '❌ Không thể đổi camera.',
+      'error'
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   SCAN SUCCESS
+========================================================= */
+
+async function onScanSuccess(
+  decodedText,
+  decodedResult
+) {
+
+  if (finished) {
+
+    return;
+
+  }
+
+
+  finished =
+    true;
+
+
+  /*
+    Làm sạch mã.
+  */
+
+  const code =
+    String(
+      decodedText || ''
+    )
+    .trim();
+
+
+  if (!code) {
+
+    finished =
+      false;
+
+    return;
+
+  }
+
+
+  /*
+    Dừng camera trước.
+  */
+
+  await stopScannerOnly();
+
+
+  /*
+    Hiển thị kết quả.
+  */
+
+  showResult(
+    code
+  );
+
+
+  /*
+    Chuyển về Apps Script
+    nếu có returnUrl.
+  */
+
+  setTimeout(
+    function() {
+
+      sendResult(
+        code
+      );
+
+    },
+    500
+  );
+
+}
+
+
+/* =========================================================
+   SCAN ERROR
+========================================================= */
+
+function onScanError(
+  errorMessage
+) {
+
+  /*
+    Không hiển thị lỗi từng frame.
+
+    html5-qrcode gọi hàm này
+    liên tục khi chưa nhận diện.
+  */
+
+}
+
+
+/* =========================================================
+   STOP CAMERA
+========================================================= */
+
+async function stopCamera() {
+
+  await stopScannerOnly();
+
+
+  startBtn.disabled =
+    false;
+
+
+  startBtn.innerText =
+    '📷 MỞ CAMERA';
+
+
+  startBtn.onclick =
+    startCamera;
+
+
+  setStatus(
+    'Camera đã dừng.',
+    'warning'
+  );
+
+}
+
+
+/* =========================================================
+   STOP INTERNAL SCANNER
+========================================================= */
+
+async function stopScannerOnly() {
 
   if (
     scanner &&
-    scanner.isScanning
+    scanning
   ) {
 
-    return scanner.stop();
+    try {
+
+      await scanner.stop();
+
+    }
+
+    catch (e) {
+
+      console.warn(
+        'Scanner stop:',
+        e
+      );
+
+    }
 
   }
 
 
-  return Promise.resolve();
+  scanning =
+    false;
 
 }
 
 
-/************************************************
- * SEND RESULT
- ************************************************/
+/* =========================================================
+   CAMERA ERROR
+========================================================= */
+
+function showCameraError(
+  error
+) {
+
+  let message =
+    '❌ Không thể mở camera.';
+
+
+  const name =
+    error &&
+    error.name
+      ? error.name
+      : '';
+
+
+  if (
+    name ===
+    'NotAllowedError'
+  ) {
+
+    message +=
+      ' Bạn chưa cấp quyền Camera cho trình duyệt.';
+
+  }
+
+  else if (
+    name ===
+    'NotFoundError'
+  ) {
+
+    message +=
+      ' Không tìm thấy camera trên thiết bị.';
+
+  }
+
+  else if (
+    name ===
+    'NotReadableError'
+  ) {
+
+    message +=
+      ' Camera đang được ứng dụng khác sử dụng.';
+
+  }
+
+  else if (
+    name ===
+    'SecurityError'
+  ) {
+
+    message +=
+      ' Trình duyệt chặn camera vì lý do bảo mật.';
+
+  }
+
+  else if (
+    name ===
+    'OverconstrainedError'
+  ) {
+
+    message +=
+      ' Không tìm được camera phù hợp. Hãy thử ĐỔI CAMERA.';
+
+  }
+
+  else if (
+    error &&
+    error.message
+  ) {
+
+    message +=
+      ' ' +
+      error.message;
+
+  }
+
+  else {
+
+    message +=
+      ' Hãy kiểm tra quyền Camera của trình duyệt.';
+
+  }
+
+
+  setStatus(
+    message,
+    'error'
+  );
+
+
+  warning.style.display =
+    'block';
+
+
+  /*
+    Cho phép thử lại.
+  */
+
+  startBtn.disabled =
+    false;
+
+
+  startBtn.innerText =
+    '📷 THỬ MỞ CAMERA LẠI';
+
+
+  startBtn.onclick =
+    startCamera;
+
+}
+
+
+/* =========================================================
+   SHOW RESULT
+========================================================= */
+
+function showResult(
+  code
+) {
+
+  resultBox.style.display =
+    'block';
+
+
+  resultCode.innerText =
+    code;
+
+
+  if (returnUrl) {
+
+    resultAction.innerText =
+      'Đang quay lại trang STOCK...';
+
+  }
+
+  else {
+
+    resultAction.innerText =
+      'Scanner đang chạy độc lập.';
+
+  }
+
+
+  setStatus(
+    '✅ Đã nhận diện barcode.',
+    'ok'
+  );
+
+}
+
+
+/* =========================================================
+   SEND RESULT
+========================================================= */
 
 function sendResult(
   code
 ) {
 
-  const target =
-    returnUrl +
-    (
-      returnUrl.includes('?')
-        ? '&'
-        : '?'
-    ) +
-    'scan=' +
-    encodeURIComponent(
+  /*
+    ===============================
+    TRƯỜNG HỢP 1
+    MỞ SCANNER TRỰC TIẾP
+    ===============================
+  */
+
+  if (!returnUrl) {
+
+    /*
+      Không chuyển trang.
+
+      Chỉ hiển thị barcode.
+    */
+
+    manualInput.value =
+      code;
+
+
+    resultAction.innerText =
+      'Đã quét thành công. Bạn có thể tiếp tục quét.';
+
+
+    /*
+      Cho phép quét tiếp.
+    */
+
+    finished =
+      false;
+
+
+    return;
+
+  }
+
+
+  /*
+    ===============================
+    TRƯỜNG HỢP 2
+    GỌI TỪ APPS SCRIPT
+    ===============================
+  */
+
+
+  let target;
+
+
+  try {
+
+    const url =
+      new URL(
+        returnUrl
+      );
+
+
+    url.searchParams.set(
+      'scan',
       code
     );
 
+
+    target =
+      url.toString();
+
+  }
+
+  catch (e) {
+
+    /*
+      Fallback nếu returnUrl
+      không phải URL chuẩn.
+    */
+
+    target =
+      returnUrl +
+      (
+        returnUrl.includes('?')
+          ? '&'
+          : '?'
+      ) +
+      'scan=' +
+      encodeURIComponent(
+        code
+      );
+
+  }
+
+
+  /*
+    Hiện loading.
+  */
+
+  document
+    .getElementById(
+      'loading'
+    )
+    .classList.add(
+      'show'
+    );
+
+
+  /*
+    Quay lại Apps Script.
+  */
 
   window.location.href =
     target;
@@ -474,49 +2021,228 @@ function sendResult(
 }
 
 
-/************************************************
- * MANUAL
- ************************************************/
+/* =========================================================
+   MANUAL SEARCH
+========================================================= */
 
 function manualSearch() {
 
   const code =
-    document
-      .getElementById('manual')
-      .value
+    manualInput.value
       .trim();
 
 
   if (!code) {
+
+    manualInput.focus();
+
+    setStatus(
+      '⚠️ Vui lòng nhập EAN.',
+      'warning'
+    );
 
     return;
 
   }
 
 
-  sendResult(
+  /*
+    Dừng camera.
+  */
+
+  stopScannerOnly();
+
+
+  finished =
+    true;
+
+
+  showResult(
     code
+  );
+
+
+  setTimeout(
+    function() {
+
+      sendResult(
+        code
+      );
+
+    },
+    300
   );
 
 }
 
 
-/************************************************
- * STATUS
- ************************************************/
+/* =========================================================
+   ENTER KEY
+========================================================= */
 
-function setStatus(
-  text
-) {
+manualInput.addEventListener(
+  'keydown',
+  function(event) {
 
-  document
-    .getElementById(
-      'status'
-    )
-    .innerText =
-      text;
+    if (
+      event.key ===
+      'Enter'
+    ) {
+
+      manualSearch();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   CLOSE
+========================================================= */
+
+function closeScanner() {
+
+  stopScannerOnly();
+
+
+  /*
+    Nếu có returnUrl,
+    quay về Apps Script.
+  */
+
+  if (returnUrl) {
+
+    window.location.href =
+      returnUrl;
+
+    return;
+
+  }
+
+
+  /*
+    Nếu được mở bằng window.open,
+    thử đóng.
+  */
+
+  try {
+
+    window.close();
+
+  }
+
+  catch (e) {}
 
 }
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+function setStatus(
+  text,
+  type
+) {
+
+  statusBox.innerText =
+    text;
+
+
+  statusBox.className =
+    'status';
+
+
+  if (type) {
+
+    statusBox.classList.add(
+      type
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   PREVENT SCREEN SLEEP
+========================================================= */
+
+let wakeLock = null;
+
+
+async function requestWakeLock() {
+
+  try {
+
+    if (
+      'wakeLock'
+      in navigator
+    ) {
+
+      wakeLock =
+        await navigator
+          .wakeLock
+          .request(
+            'screen'
+          );
+
+    }
+
+  }
+
+  catch (e) {
+
+    console.log(
+      'Wake lock not available'
+    );
+
+  }
+
+}
+
+
+document.addEventListener(
+  'visibilitychange',
+  async function() {
+
+    if (
+      document.visibilityState ===
+      'visible' &&
+      scanning
+    ) {
+
+      await requestWakeLock();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   CAMERA BUTTON
+========================================================= */
+
+const originalStartCamera =
+  startCamera;
+
+
+/*
+  Khi bắt đầu camera,
+  giữ màn hình sáng nếu trình duyệt hỗ trợ.
+*/
+
+startCamera =
+  async function() {
+
+    await requestWakeLock();
+
+    await originalStartCamera();
+
+  };
+
 
 </script>
 
