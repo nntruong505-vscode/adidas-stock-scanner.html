@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 
 <head>
 
+<meta charset="UTF-8">
+
 <meta
   name="viewport"
-  content="width=device-width, initial-scale=1, maximum-scale=1"
+  content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"
 >
 
 <title>ADIDAS BARCODE SCANNER</title>
@@ -16,24 +18,24 @@
   box-sizing: border-box;
 }
 
+html,
 body {
-
   margin: 0;
-
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
   background: #000;
-
   color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+}
 
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
-
+body {
+  overflow-x: hidden;
 }
 
 .header {
 
-  height: 58px;
+  height: 64px;
 
   display: flex;
 
@@ -41,17 +43,23 @@ body {
 
   justify-content: space-between;
 
-  padding: 0 15px;
+  padding:
+    0 18px;
 
   background: #050505;
+
+  border-bottom:
+    1px solid #222;
 
 }
 
 .logo {
 
-  font-size: 16px;
+  font-size: 20px;
 
   font-weight: 900;
+
+  letter-spacing: .5px;
 
 }
 
@@ -63,11 +71,13 @@ body {
 
 .version {
 
-  font-size: 9px;
-
   color: #999;
 
+  font-size: 11px;
+
 }
+
+/* CAMERA */
 
 .camera {
 
@@ -75,21 +85,57 @@ body {
 
   width: 100%;
 
-  max-width: 700px;
+  max-width: 800px;
 
-  margin: auto;
+  margin: 0 auto;
 
   background: #111;
+
+  overflow: hidden;
 
 }
 
 video {
 
-  width: 100%;
-
   display: block;
 
+  width: 100%;
+
+  height: auto;
+
+  min-height: 260px;
+
+  max-height: 55vh;
+
+  object-fit: cover;
+
   background: #111;
+
+}
+
+/* SCAN AREA */
+
+.scan-area {
+
+  position: absolute;
+
+  left: 8%;
+
+  right: 8%;
+
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  height: 120px;
+
+  border:
+
+    2px solid rgba(156,255,0,.65);
+
+  border-radius: 10px;
+
+  pointer-events: none;
 
 }
 
@@ -97,9 +143,9 @@ video {
 
   position: absolute;
 
-  left: 10%;
+  left: 0;
 
-  right: 10%;
+  right: 0;
 
   top: 50%;
 
@@ -108,44 +154,77 @@ video {
   background: #9cff00;
 
   box-shadow:
-    0 0 10px #9cff00;
+
+    0 0 12px #9cff00;
+
+  animation:
+    scan 1.8s linear infinite;
 
 }
 
+@keyframes scan {
+
+  0% {
+    top: 10%;
+  }
+
+  50% {
+    top: 90%;
+  }
+
+  100% {
+    top: 10%;
+  }
+
+}
+
+/* CONTROLS */
+
 .controls {
 
-  padding: 12px;
+  width: 100%;
 
-  max-width: 700px;
+  max-width: 800px;
 
   margin: auto;
+
+  padding: 14px;
 
 }
 
 select,
-button {
+button,
+input {
 
   width: 100%;
 
-  height: 44px;
+  height: 48px;
 
-  border-radius: 6px;
+  border-radius: 8px;
 
-  border: 0;
+  margin-bottom: 9px;
 
-  margin-bottom: 7px;
+  font-size: 15px;
 
-  font-weight: 900;
+  font-weight: 800;
 
 }
 
 select {
 
-  padding: 0 10px;
+  padding: 0 12px;
+
+  background: #fff;
+
+  color: #111;
+
+  border: 0;
 
 }
 
 button {
+
+  border: 0;
 
   background: #fff;
 
@@ -157,23 +236,66 @@ button.black {
 
   background: #111;
 
-  border: 1px solid #555;
-
   color: #fff;
+
+  border:
+    1px solid #555;
 
 }
 
+button.green {
+
+  background: #9cff00;
+
+  color: #000;
+
+}
+
+/* MANUAL */
+
+.manual {
+
+  display: flex;
+
+  gap: 7px;
+
+}
+
+.manual input {
+
+  flex: 1;
+
+  padding: 0 12px;
+
+  border: 0;
+
+  margin: 0;
+
+}
+
+.manual button {
+
+  width: 80px;
+
+  margin: 0;
+
+}
+
+/* RESULT */
+
 .result {
 
-  max-width: 700px;
+  width: 100%;
 
-  margin: 10px auto;
+  max-width: 800px;
 
-  padding: 15px;
+  margin: 5px auto 20px;
+
+  padding: 18px;
 
   background: #111;
 
-  border-radius: 7px;
+  border-radius: 10px;
 
   text-align: center;
 
@@ -181,7 +303,7 @@ button.black {
 
 .result-code {
 
-  font-size: 26px;
+  font-size: 28px;
 
   font-weight: 900;
 
@@ -191,18 +313,51 @@ button.black {
 
 .status {
 
-  font-size: 11px;
+  margin-top: 8px;
 
   color: #aaa;
 
-  margin-top: 7px;
+  font-size: 12px;
 
+  line-height: 1.5;
+
+}
+
+.status.ok {
+
+  color: #9cff00;
+
+}
+
+.status.error {
+
+  color: #ff6666;
+
+}
+
+/* DEBUG */
+
+.debug {
+
+  margin-top: 10px;
+
+  color: #666;
+
+  font-size: 9px;
+
+  word-break: break-all;
+
+}
+
+/* HIDDEN */
+
+.hidden {
+  display: none !important;
 }
 
 </style>
 
 </head>
-
 
 <body>
 
@@ -217,12 +372,14 @@ button.black {
 
   <div class="version">
 
-    V5.0
+    V5.1
 
   </div>
 
 </header>
 
+
+<!-- CAMERA -->
 
 <div class="camera">
 
@@ -230,22 +387,29 @@ button.black {
     id="video"
     autoplay
     muted
-    playsinline>
+    playsinline
+    webkit-playsinline>
   </video>
 
-  <div class="scan-line"></div>
+  <div class="scan-area">
+
+    <div class="scan-line"></div>
+
+  </div>
 
 </div>
 
 
+<!-- CONTROLS -->
+
 <div class="controls">
 
-  <select
-    id="camera-select">
 
-    <option>
+  <select id="camera-select">
 
-      Đang tải camera...
+    <option value="">
+
+      Camera mặc định
 
     </option>
 
@@ -253,7 +417,7 @@ button.black {
 
 
   <button
-    onclick="startScanner()">
+    onclick="startCamera()">
 
     📷 BẬT CAMERA
 
@@ -262,9 +426,18 @@ button.black {
 
   <button
     class="black"
-    onclick="stopScanner()">
+    onclick="stopCamera()">
 
     ⏹ DỪNG CAMERA
+
+  </button>
+
+
+  <button
+    class="black"
+    onclick="switchCamera()">
+
+    🔄 ĐỔI CAMERA
 
   </button>
 
@@ -277,8 +450,32 @@ button.black {
 
   </button>
 
+
+  <div class="manual">
+
+    <input
+      id="manual-code"
+      type="text"
+      inputmode="numeric"
+      autocomplete="off"
+      placeholder="Nhập EAN thủ công"
+    >
+
+    <button
+      class="green"
+      onclick="manualScan()">
+
+      OK
+
+    </button>
+
+  </div>
+
+
 </div>
 
+
+<!-- RESULT -->
 
 <div class="result">
 
@@ -290,30 +487,64 @@ button.black {
 
   </div>
 
+
   <div
     id="status"
     class="status">
 
-    Cấp quyền camera nếu trình duyệt yêu cầu.
+    Nhấn BẬT CAMERA để bắt đầu.
+
+  </div>
+
+
+  <div
+    id="debug"
+    class="debug">
 
   </div>
 
 </div>
 
 
-<script src="https://unpkg.com/@zxing/library@0.21.3/umd/index.min.js"></script>
+<!-- ZXING -->
+
+<script
+  src="https://unpkg.com/@zxing/library@0.21.3/umd/index.min.js">
+</script>
 
 
 <script>
 
+/* =====================================================
+   GLOBAL
+===================================================== */
+
 let codeReader = null;
+
+let stream = null;
 
 let currentDeviceId = '';
 
-let returnUrl =
+let devices = [];
+
+let scanning = false;
+
+let lastScan = '';
+
+let lastScanTime = 0;
+
+
+/* =====================================================
+   RETURN URL
+===================================================== */
+
+const params =
   new URLSearchParams(
     window.location.search
-  ).get('return');
+  );
+
+const returnUrl =
+  params.get('return') || '';
 
 
 /* =====================================================
@@ -324,7 +555,7 @@ window.addEventListener(
   'load',
   function() {
 
-    initScanner();
+    init();
 
   }
 );
@@ -334,7 +565,7 @@ window.addEventListener(
    INIT
 ===================================================== */
 
-async function initScanner() {
+async function init() {
 
   setStatus(
     'Đang kiểm tra camera...'
@@ -342,49 +573,120 @@ async function initScanner() {
 
   try {
 
+    if (
+      !navigator.mediaDevices ||
+      !navigator.mediaDevices.getUserMedia
+    ) {
+
+      throw new Error(
+        'Trình duyệt không hỗ trợ camera.'
+      );
+
+    }
+
+
+    /*
+     * Khởi tạo ZXing
+     */
+
     codeReader =
       new ZXing.BrowserMultiFormatReader();
 
-    const devices =
-      await codeReader.listVideoInputDevices();
+
+    /*
+     * KHÔNG yêu cầu camera ngay tại đây.
+     *
+     * Trên iPhone Safari,
+     * enumerateDevices trước khi
+     * cấp quyền có thể trả label/device
+     * không đầy đủ.
+     */
+
+    setStatus(
+      'Sẵn sàng. Nhấn BẬT CAMERA.'
+    );
+
+
+  } catch(error) {
+
+    showError(error);
+
+  }
+
+}
+
+
+/* =====================================================
+   GET DEVICES
+===================================================== */
+
+async function loadDevices() {
+
+  try {
+
+    devices =
+      await navigator
+        .mediaDevices
+        .enumerateDevices();
+
+
+    const cameras =
+      devices.filter(
+        function(device) {
+
+          return device.kind ===
+            'videoinput';
+
+        }
+      );
+
 
     const select =
       document.getElementById(
         'camera-select'
       );
 
+
     select.innerHTML = '';
 
-    if (
-      !devices ||
-      !devices.length
-    ) {
 
-      setStatus(
-        'Không tìm thấy camera. Hãy kiểm tra quyền camera.'
-      );
+    if (!cameras.length) {
+
+      select.innerHTML = `
+
+        <option value="">
+
+          Camera mặc định
+
+        </option>
+
+      `;
 
       return;
 
     }
 
-    devices.forEach(
-      function(device,index) {
+
+    cameras.forEach(
+      function(camera,index) {
 
         const option =
           document.createElement(
             'option'
           );
 
+
         option.value =
-          device.deviceId;
+          camera.deviceId;
+
 
         option.textContent =
-          device.label ||
+          camera.label ||
           (
             'Camera ' +
             (index + 1)
           );
+
 
         select.appendChild(
           option
@@ -393,21 +695,23 @@ async function initScanner() {
       }
     );
 
+
     /*
-     * Ưu tiên camera sau.
+     * Ưu tiên camera sau
      */
 
     const backCamera =
-      devices.find(
-        function(device) {
+      cameras.find(
+        function(camera) {
 
           return /back|rear|environment/i
             .test(
-              device.label || ''
+              camera.label || ''
             );
 
         }
       );
+
 
     if (backCamera) {
 
@@ -416,27 +720,16 @@ async function initScanner() {
 
     }
 
+
     currentDeviceId =
-      select.value;
+      select.value || '';
 
-    setStatus(
-      'Đã tìm thấy ' +
-      devices.length +
-      ' camera.'
-    );
-
-    /*
-     * Không tự bật camera ngay.
-     * Người dùng bấm BẬT CAMERA.
-     */
 
   } catch(error) {
 
-    console.error(error);
-
-    setStatus(
-      'Không thể truy cập camera: ' +
-      error.message
+    console.log(
+      'enumerateDevices error',
+      error
     );
 
   }
@@ -445,50 +738,275 @@ async function initScanner() {
 
 
 /* =====================================================
-   START
+   START CAMERA
 ===================================================== */
 
-async function startScanner() {
+async function startCamera() {
 
-  if (!codeReader) {
+  stopCamera();
 
-    await initScanner();
-
-  }
-
-  const select =
-    document.getElementById(
-      'camera-select'
-    );
-
-  currentDeviceId =
-    select.value;
-
-  if (!currentDeviceId) {
-
-    setStatus(
-      'Chưa chọn camera.'
-    );
-
-    return;
-
-  }
 
   setStatus(
     'Đang mở camera...'
   );
 
+
   try {
 
-    await codeReader.decodeFromVideoDevice(
-      currentDeviceId,
-      'video',
-      function(result, error) {
+    /*
+     * Sau khi người dùng bấm nút,
+     * gọi getUserMedia trực tiếp.
+     */
+
+    let constraints;
+
+
+    /*
+     * Nếu người dùng đã chọn camera
+     */
+
+    if (currentDeviceId) {
+
+      constraints = {
+
+        video: {
+
+          deviceId: {
+
+            ideal:
+              currentDeviceId
+
+          },
+
+          width: {
+
+            ideal: 1280
+
+          },
+
+          height: {
+
+            ideal: 720
+
+          }
+
+        },
+
+        audio: false
+
+      };
+
+    } else {
+
+      /*
+       * Không ép camera.
+       * Chỉ ưu tiên camera sau.
+       */
+
+      constraints = {
+
+        video: {
+
+          facingMode: {
+
+            ideal:
+              'environment'
+
+          },
+
+          width: {
+
+            ideal: 1280
+
+          },
+
+          height: {
+
+            ideal: 720
+
+          }
+
+        },
+
+        audio: false
+
+      };
+
+    }
+
+
+    /*
+     * Lần 1
+     */
+
+    try {
+
+      stream =
+        await navigator
+          .mediaDevices
+          .getUserMedia(
+            constraints
+          );
+
+    } catch(firstError) {
+
+      console.warn(
+        'Camera constraint failed:',
+        firstError
+      );
+
+
+      /*
+       * FALLBACK QUAN TRỌNG
+       *
+       * Không yêu cầu deviceId,
+       * không yêu cầu facingMode,
+       * không yêu cầu resolution.
+       */
+
+      setStatus(
+        'Đang thử chế độ camera tương thích...'
+      );
+
+
+      stream =
+        await navigator
+          .mediaDevices
+          .getUserMedia({
+
+            video: true,
+
+            audio: false
+
+          });
+
+    }
+
+
+    /*
+     * Gắn stream vào video
+     */
+
+    const video =
+      document.getElementById(
+        'video'
+      );
+
+
+    video.srcObject =
+      stream;
+
+
+    /*
+     * iPhone Safari
+     */
+
+    video.setAttribute(
+      'playsinline',
+      ''
+    );
+
+    video.setAttribute(
+      'webkit-playsinline',
+      ''
+    );
+
+    video.muted = true;
+
+
+    await video.play();
+
+
+    scanning = true;
+
+
+    /*
+     * Sau khi đã mở camera,
+     * cập nhật danh sách camera.
+     */
+
+    await loadDevices();
+
+
+    /*
+     * Bắt đầu ZXing
+     */
+
+    startZXing();
+
+
+    setStatus(
+      'Camera đang hoạt động — đưa barcode vào khung.',
+      'ok'
+    );
+
+
+  } catch(error) {
+
+    console.error(
+      'START CAMERA ERROR',
+      error
+    );
+
+
+    showCameraError(
+      error
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   ZXING
+===================================================== */
+
+function startZXing() {
+
+  if (!codeReader) {
+
+    codeReader =
+      new ZXing.BrowserMultiFormatReader();
+
+  }
+
+
+  const video =
+    document.getElementById(
+      'video'
+    );
+
+
+  try {
+
+    /*
+     * Dùng stream hiện tại.
+     *
+     * Không dùng:
+     * decodeFromVideoDevice()
+     *
+     * vì đó chính là phần dễ gây
+     * Invalid constraint trên iPhone.
+     */
+
+    codeReader.decodeFromStream(
+      stream,
+      video,
+      function(result,error) {
+
+        if (!scanning) {
+
+          return;
+
+        }
+
 
         if (result) {
 
           const code =
             result.getText();
+
 
           handleScan(
             code
@@ -499,17 +1017,19 @@ async function startScanner() {
       }
     );
 
-    setStatus(
-      'Camera đang hoạt động — đưa barcode vào khung.'
-    );
 
   } catch(error) {
 
-    console.error(error);
+    console.error(
+      'ZXING ERROR',
+      error
+    );
+
 
     setStatus(
-      'Không thể mở camera: ' +
-      error.message
+      'Camera đã mở nhưng Scanner chưa khởi động: ' +
+      error.message,
+      'error'
     );
 
   }
@@ -518,43 +1038,60 @@ async function startScanner() {
 
 
 /* =====================================================
-   STOP
+   STOP CAMERA
 ===================================================== */
 
-function stopScanner() {
+function stopCamera() {
 
-  if (codeReader) {
+  scanning = false;
 
-    try {
+
+  try {
+
+    if (codeReader) {
 
       codeReader.reset();
 
-    } catch(e) {}
+    }
+
+  } catch(e) {}
+
+
+  if (stream) {
+
+    stream
+      .getTracks()
+      .forEach(
+        function(track) {
+
+          try {
+
+            track.stop();
+
+          } catch(e) {}
+
+        }
+      );
+
+    stream = null;
 
   }
+
 
   const video =
     document.getElementById(
       'video'
     );
 
-  if (
-    video.srcObject
-  ) {
 
-    video.srcObject
-      .getTracks()
-      .forEach(
-        function(track) {
+  if (video) {
 
-          track.stop();
-
-        }
-      );
+    video.pause();
 
     video.srcObject = null;
 
   }
+
 
   setStatus(
     'Camera đã dừng.'
@@ -564,37 +1101,157 @@ function stopScanner() {
 
 
 /* =====================================================
-   SCAN
+   SWITCH CAMERA
 ===================================================== */
 
-let lastScan = '';
+async function switchCamera() {
 
-let lastScanTime = 0;
+  stopCamera();
 
+
+  await loadDevices();
+
+
+  if (!devices.length) {
+
+    setStatus(
+      'Không tìm thấy camera.'
+    );
+
+    return;
+
+  }
+
+
+  const select =
+    document.getElementById(
+      'camera-select'
+    );
+
+
+  const options =
+    Array.from(
+      select.options
+    );
+
+
+  if (!options.length) {
+
+    return;
+
+  }
+
+
+  let index =
+    select.selectedIndex;
+
+
+  index++;
+
+
+  if (
+    index >= options.length
+  ) {
+
+    index = 0;
+
+  }
+
+
+  select.selectedIndex =
+    index;
+
+
+  currentDeviceId =
+    select.value;
+
+
+  startCamera();
+
+}
+
+
+/* =====================================================
+   SELECT CAMERA
+===================================================== */
+
+document.addEventListener(
+  'DOMContentLoaded',
+  function() {
+
+    const select =
+      document.getElementById(
+        'camera-select'
+      );
+
+
+    select.addEventListener(
+      'change',
+      function() {
+
+        currentDeviceId =
+          this.value;
+
+
+        if (stream) {
+
+          startCamera();
+
+        }
+
+      }
+    );
+
+  }
+);
+
+
+/* =====================================================
+   SCAN RESULT
+===================================================== */
 
 function handleScan(code) {
+
+  code =
+    String(code || '')
+      .trim();
+
+
+  if (!code) {
+
+    return;
+
+  }
+
 
   const now =
     Date.now();
 
+
   /*
-   * Chống quét lặp cùng barcode.
+   * Chống quét trùng
    */
 
   if (
+
     code === lastScan &&
+
     now - lastScanTime < 1800
+
   ) {
 
     return;
 
   }
 
+
   lastScan =
     code;
 
+
   lastScanTime =
     now;
+
 
   document
     .getElementById(
@@ -603,41 +1260,117 @@ function handleScan(code) {
     .innerText =
       code;
 
+
   setStatus(
-    'Đã quét thành công.'
+    '✓ Đã quét thành công.',
+    'ok'
   );
 
 
   /*
-   * Trả về Apps Script.
+   * Dừng camera
    */
 
-  if (returnUrl) {
+  stopCamera();
 
-    const separator =
-      returnUrl.indexOf('?') >= 0
-        ? '&'
-        : '?';
 
-    const url =
-      returnUrl +
-      separator +
-      'scan=' +
-      encodeURIComponent(
-        code
-      );
+  /*
+   * Trả về Apps Script
+   */
 
-    setTimeout(
-      function() {
+  returnToApp(
+    code
+  );
 
-        window.location.href =
-          url;
+}
 
-      },
-      400
+
+/* =====================================================
+   RETURN TO APPS SCRIPT
+===================================================== */
+
+function returnToApp(code) {
+
+  if (!returnUrl) {
+
+    setStatus(
+      'Đã quét ' +
+      code +
+      ' nhưng không có URL quay lại Apps Script.',
+      'error'
     );
 
+    return;
+
   }
+
+
+  const separator =
+    returnUrl.indexOf('?') >= 0
+      ? '&'
+      : '?';
+
+
+  const url =
+    returnUrl +
+    separator +
+    'scan=' +
+    encodeURIComponent(
+      code
+    );
+
+
+  setStatus(
+    'Đang quay lại STOCK...',
+    'ok'
+  );
+
+
+  setTimeout(
+    function() {
+
+      window.location.href =
+        url;
+
+    },
+    500
+  );
+
+}
+
+
+/* =====================================================
+   MANUAL SCAN
+===================================================== */
+
+function manualScan() {
+
+  const input =
+    document.getElementById(
+      'manual-code'
+    );
+
+
+  const code =
+    input.value.trim();
+
+
+  if (!code) {
+
+    setStatus(
+      'Vui lòng nhập EAN.'
+    );
+
+    input.focus();
+
+    return;
+
+  }
+
+
+  handleScan(
+    code
+  );
 
 }
 
@@ -647,6 +1380,9 @@ function handleScan(code) {
 ===================================================== */
 
 function manualReturn() {
+
+  stopCamera();
+
 
   if (returnUrl) {
 
@@ -663,51 +1399,197 @@ function manualReturn() {
 
 
 /* =====================================================
-   CAMERA CHANGE
+   STATUS
 ===================================================== */
 
-document
-  .getElementById(
-    'camera-select'
-  )
-  .addEventListener(
-    'change',
-    function() {
+function setStatus(
+  text,
+  type
+) {
 
-      currentDeviceId =
-        this.value;
+  const status =
+    document.getElementById(
+      'status'
+    );
 
-      /*
-       * Nếu camera đang chạy,
-       * khởi động lại.
-       */
+
+  status.innerText =
+    text;
+
+
+  status.className =
+    'status ' +
+    (type || '');
+
+}
+
+
+/* =====================================================
+   ERROR
+===================================================== */
+
+function showError(error) {
+
+  console.error(
+    error
+  );
+
+
+  const message =
+    error &&
+    error.message
+      ? error.message
+      : String(error);
+
+
+  setStatus(
+    'Lỗi: ' + message,
+    'error'
+  );
+
+}
+
+
+/* =====================================================
+   CAMERA ERROR
+===================================================== */
+
+function showCameraError(error) {
+
+  let message =
+    'Không thể mở camera.';
+
+
+  if (!error) {
+
+    setStatus(
+      message,
+      'error'
+    );
+
+    return;
+
+  }
+
+
+  console.error(
+    error.name,
+    error.message
+  );
+
+
+  switch(
+    error.name
+  ) {
+
+    case 'NotAllowedError':
+
+      message =
+        'Camera bị từ chối. Hãy vào Cài đặt → Safari → Camera và chọn Cho phép.';
+
+      break;
+
+
+    case 'NotFoundError':
+
+      message =
+        'Không tìm thấy camera trên thiết bị.';
+
+      break;
+
+
+    case 'NotReadableError':
+
+      message =
+        'Camera đang được ứng dụng khác sử dụng. Hãy đóng ứng dụng khác rồi thử lại.';
+
+      break;
+
+
+    case 'OverconstrainedError':
+
+    case 'ConstraintNotSatisfiedError':
+
+      message =
+        'Thiết lập camera không tương thích. Hệ thống đã thử chế độ dự phòng.';
+
+      break;
+
+
+    case 'SecurityError':
+
+      message =
+        'Trình duyệt đang chặn quyền camera.';
+
+      break;
+
+
+    default:
+
+      message =
+        'Không thể mở camera: ' +
+        (
+          error.message ||
+          error.name ||
+          'Unknown error'
+        );
+
+  }
+
+
+  setStatus(
+    message,
+    'error'
+  );
+
+
+  document
+    .getElementById(
+      'debug'
+    )
+    .innerText =
+      (
+        error.name || ''
+      ) +
+      ' — ' +
+      (
+        error.message || ''
+      );
+
+}
+
+
+/* =====================================================
+   ENTER MANUAL
+===================================================== */
+
+document.addEventListener(
+  'keydown',
+  function(e) {
+
+    if (
+      e.key === 'Enter'
+    ) {
+
+      const input =
+        document.getElementById(
+          'manual-code'
+        );
+
 
       if (
-        codeReader
+        document.activeElement ===
+        input
       ) {
 
-        startScanner();
+        manualScan();
 
       }
 
     }
-  );
 
-
-/* =====================================================
-   STATUS
-===================================================== */
-
-function setStatus(text) {
-
-  document
-    .getElementById(
-      'status'
-    )
-    .innerText =
-      text;
-
-}
+  }
+);
 
 </script>
 
