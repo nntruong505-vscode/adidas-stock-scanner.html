@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta
+  charset="UTF-8"
+>
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1"
+>
+
+<title>ADIDAS BARCODE SCANNER</title>
+
+<script
+  src="https://unpkg.com/html5-qrcode"
+  type="text/javascript">
+</script>
+
+<style>
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+
+  margin: 0;
+
+  background: #000;
+
+  color: #fff;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+}
+
+.header {
+
+  height: 56px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding: 0 16px;
+
+  background: #000;
+
+  border-bottom:
+    1px solid #333;
+
+}
+
+.logo {
+
+  font-weight: 900;
+
+  font-size: 16px;
+
+}
+
+.logo span {
+
+  color: #76ff00;
+
+}
+
+.close {
+
+  color: #fff;
+
+  text-decoration: none;
+
+  font-size: 25px;
+
+}
+
+.container {
+
+  max-width: 500px;
+
+  margin: auto;
+
+  padding: 15px;
+
+}
+
+.title {
+
+  text-align: center;
+
+  font-size: 13px;
+
+  font-weight: 900;
+
+  margin: 10px 0 15px;
+
+}
+
+#reader {
+
+  width: 100%;
+
+  background: #111;
+
+  border-radius: 10px;
+
+  overflow: hidden;
+
+}
+
+.status {
+
+  margin-top: 15px;
+
+  background: #111;
+
+  border-radius: 8px;
+
+  padding: 14px;
+
+  text-align: center;
+
+  font-size: 11px;
+
+}
+
+.manual {
+
+  margin-top: 12px;
+
+  display: flex;
+
+  gap: 6px;
+
+}
+
+.manual input {
+
+  flex: 1;
+
+  height: 42px;
+
+  border: 0;
+
+  border-radius: 5px;
+
+  padding: 0 10px;
+
+  font-size: 14px;
+
+}
+
+.manual button {
+
+  width: 80px;
+
+  background: #fff;
+
+  border: 0;
+
+  border-radius: 5px;
+
+  font-weight: 900;
+
+}
+
+.help {
+
+  text-align: center;
+
+  color: #999;
+
+  font-size: 9px;
+
+  line-height: 1.5;
+
+  margin-top: 14px;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="header">
+
+  <div class="logo">
+
+    ADIDAS <span>SCANNER</span>
+
+  </div>
+
+  <a
+    href="javascript:window.close()"
+    class="close">
+
+    ×
+
+  </a>
+
+</div>
+
+
+<div class="container">
+
+
+  <div class="title">
+
+    QUÉT BARCODE SẢN PHẨM
+
+  </div>
+
+
+  <div id="reader"></div>
+
+
+  <div
+    id="status"
+    class="status">
+
+    Đang khởi động camera...
+
+  </div>
+
+
+  <div class="manual">
+
+    <input
+      id="manual"
+      placeholder="Nhập EAN thủ công"
+    >
+
+    <button
+      onclick="manualSearch()">
+
+      OK
+
+    </button>
+
+  </div>
+
+
+  <div class="help">
+
+    Cho phép trình duyệt sử dụng camera.<br>
+
+    Đưa barcode vào giữa khung hình.<br>
+
+    Khi nhận diện thành công,
+    hệ thống sẽ tự động quay lại trang STOCK.
+
+  </div>
+
+
+</div>
+
+
+<script>
+
+
+/************************************************
+ * READ RETURN URL
+ ************************************************/
+
+const params =
+  new URLSearchParams(
+    window.location.search
+  );
+
+
+const returnUrl =
+  params.get('return');
+
+
+let scanner = null;
+
+let finished = false;
+
+
+/************************************************
+ * START
+ ************************************************/
+
+window.addEventListener(
+  'load',
+  startScanner
+);
+
+
+/************************************************
+ * START CAMERA
+ ************************************************/
+
+function startScanner() {
+
+  if (!returnUrl) {
+
+    setStatus(
+      'Thiếu URL quay lại Apps Script.'
+    );
+
+    return;
+
+  }
+
+
+  if (
+    !navigator.mediaDevices ||
+    !navigator.mediaDevices.getUserMedia
+  ) {
+
+    setStatus(
+      'Trình duyệt không hỗ trợ camera.'
+    );
+
+    return;
+
+  }
+
+
+  scanner =
+    new Html5Qrcode(
+      'reader'
+    );
+
+
+  scanner
+    .start(
+
+      {
+        facingMode:
+          {
+            ideal:
+              'environment'
+          }
+      },
+
+      {
+
+        fps: 10,
+
+        qrbox: {
+          width: 280,
+          height: 140
+        },
+
+        aspectRatio: 1.777
+
+      },
+
+      function(decodedText) {
+
+        if (finished) return;
+
+        finished = true;
+
+        setStatus(
+          'Đã nhận diện: ' +
+          decodedText
+        );
+
+
+        stopScanner()
+          .then(
+            function() {
+
+              sendResult(
+                decodedText
+              );
+
+            }
+          );
+
+      },
+
+      function(error) {
+
+        // Không hiển thị lỗi từng frame.
+
+      }
+
+    )
+
+    .then(
+      function() {
+
+        setStatus(
+          '📷 Camera đã sẵn sàng — đưa barcode vào khung.'
+        );
+
+      }
+    )
+
+    .catch(
+      function(error) {
+
+        console.error(
+          error
+        );
+
+
+        setStatus(
+
+          '❌ Không thể mở camera. ' +
+          'Hãy kiểm tra quyền Camera của trình duyệt.'
+
+        );
+
+      }
+    );
+
+}
+
+
+/************************************************
+ * STOP
+ ************************************************/
+
+function stopScanner() {
+
+  if (
+    scanner &&
+    scanner.isScanning
+  ) {
+
+    return scanner.stop();
+
+  }
+
+
+  return Promise.resolve();
+
+}
+
+
+/************************************************
+ * SEND RESULT
+ ************************************************/
+
+function sendResult(
+  code
+) {
+
+  const target =
+    returnUrl +
+    (
+      returnUrl.includes('?')
+        ? '&'
+        : '?'
+    ) +
+    'scan=' +
+    encodeURIComponent(
+      code
+    );
+
+
+  window.location.href =
+    target;
+
+}
+
+
+/************************************************
+ * MANUAL
+ ************************************************/
+
+function manualSearch() {
+
+  const code =
+    document
+      .getElementById('manual')
+      .value
+      .trim();
+
+
+  if (!code) {
+
+    return;
+
+  }
+
+
+  sendResult(
+    code
+  );
+
+}
+
+
+/************************************************
+ * STATUS
+ ************************************************/
+
+function setStatus(
+  text
+) {
+
+  document
+    .getElementById(
+      'status'
+    )
+    .innerText =
+      text;
+
+}
+
+</script>
+
+</body>
+
+</html>
